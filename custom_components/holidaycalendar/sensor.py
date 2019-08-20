@@ -6,7 +6,7 @@ https://github.com/aalavender/HolidayCalendar
 
 """
 import logging
-
+import asyncio
 import voluptuous as vol
 import datetime
 from homeassistant.helpers.entity import Entity
@@ -78,18 +78,17 @@ HOLIDAY_BUBAN = {
     datetime.date(year=2019, month=10, day=12): "国庆节补班",
 }
 
-
-def setup_platform(hass, config, add_devices, discovery_info=None):
-    add_devices([HolidayCalSensor(hass, config)])
+@asyncio.coroutine
+def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
+    name = config[CONF_NAME]
+    _LOGGER.info("start async_setup_platform sensor HolidayCalendar")
+    async_add_devices([HolidayCalSensor(name)], True)
 
 
 class HolidayCalSensor(Entity):
-    def __init__(self, hass, config):
-        self.hass = hass
-        self._name = config[CONF_NAME]
+    def __init__(self, name):
+        self._name = name
         self._entries = {}
-
-        self.update()
 
     def getAnniversary(self, day):
         ''' 返回纪念日，没有返回None '''
@@ -113,17 +112,20 @@ class HolidayCalSensor(Entity):
         json_data = json.loads(json_text)
         if json_data["message"] == "success": #查询成功
             self._entries["animal"] = json_data["data"]["animal"]
-            self._entries["date"] = "{0}-{1}-{2}".format(
-                json_data["data"]["year"], json_data["data"]["month"], json_data["data"]["day"])
-            self._entries["cndate"] = "{0}年{1}月{2}日".format(
-                json_data["data"]["cyclicalYear"], json_data["data"]["cyclicalMonth"], json_data["data"]["cyclicalDay"])
+            self._entries["year"] = json_data["data"]["year"]
+            self._entries["month"] = json_data["data"]["month"]
+            self._entries["day"] = json_data["data"]["day"]
+            self._entries["week"] = json_data["data"]["week"]
+            self._entries["cyclicalYear"] = json_data["data"]["cyclicalYear"]
+            self._entries["cyclicalMonth"] = json_data["data"]["cyclicalMonth"]
+            self._entries["cyclicalDay"] = json_data["data"]["cyclicalDay"]
             self._entries["lunar"] = "{0}月{1}".format(json_data["data"]["cnmonth"], json_data["data"]["cnday"])
             self._entries["festival"] = 'None'
             if json_data["data"]["festivalList"]:
                 self._entries["festival"] = '/'.join(json_data["data"]["festivalList"])
             self._entries["jieqi"] = 'None'
             for key, value in json_data["data"]["jieqi"].items():
-                if json_data["data"]["month"] == key:
+                if json_data["data"]["day"] == key:
                     self._entries["jieqi"] = value
 
             # 获取周年纪念日，目前只有生日

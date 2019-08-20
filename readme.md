@@ -14,11 +14,6 @@ sensor:
     name: 万年历
 ```
 
-
-# 前台界面
-
-![avatar](https://github.com/aalavender/HolidayCalendar/blob/master/1.PNG)
-
 # 属性说明
 | 属性 | 说明 | 
 | :-------------: |:-------------:| 
@@ -28,4 +23,19 @@ sensor:
 | lunar | 当天农历 | 
 | festival | 当天的节日，没有None，多个用/隔离 | 
 | jieqi | 当天的24节气，没有None | 
-| jnr | 当天的纪念日，需要事先在getAnniversary函数中定义 | 
+| jnr | 当天的纪念日，没有None，需要事先在getAnniversary函数中定义 | 
+
+
+# 前台界面
+
+![avatar](https://github.com/aalavender/HolidayCalendar/blob/master/1.PNG)
+
+自定义了date-card，countdown参数不填就没有倒计时
+![avatar](https://github.com/aalavender/HolidayCalendar/blob/master/2.PNG)
+
+```yaml
+entity: sensor.mo_nian_li
+title: 万年历
+type: 'custom:date-card'
+countdown: 2019/09/01|开学
+```
