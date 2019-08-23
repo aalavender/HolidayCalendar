@@ -125,7 +125,7 @@ class HolidayCalSensor(Entity):
                 self._entries["festival"] = '/'.join(json_data["data"]["festivalList"])
             self._entries["jieqi"] = 'None'
             for key, value in json_data["data"]["jieqi"].items():
-                if json_data["data"]["day"] == key:
+                if json_data["data"]["day"] == int(key):
                     self._entries["jieqi"] = value
 
             # 获取周年纪念日，目前只有生日
