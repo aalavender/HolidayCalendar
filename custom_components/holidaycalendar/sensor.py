@@ -67,16 +67,16 @@ HOLIDAY = {
     datetime.date(year=2019, month=10, day=7): "国庆节放假",
 }
 
-HOLIDAY_BUBAN = {
-    datetime.date(year=2019, month=2, day=2):  "春节补班",
-    datetime.date(year=2019, month=2, day=3):  "春节补班",
-
-    datetime.date(year=2019, month=4, day=28): "劳动节补班",
-    datetime.date(year=2019, month=5, day=5): "劳动节补班",
-
-    datetime.date(year=2019, month=9, day=29): "国庆节补班",
-    datetime.date(year=2019, month=10, day=12): "国庆节补班",
-}
+# HOLIDAY_BUBAN = {
+#     datetime.date(year=2019, month=2, day=2):  "春节补班",
+#     datetime.date(year=2019, month=2, day=3):  "春节补班",
+#
+#     datetime.date(year=2019, month=4, day=28): "劳动节补班",
+#     datetime.date(year=2019, month=5, day=5): "劳动节补班",
+#
+#     datetime.date(year=2019, month=9, day=29): "国庆节补班",
+#     datetime.date(year=2019, month=10, day=12): "国庆节补班",
+# }
 
 @asyncio.coroutine
 def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
@@ -141,8 +141,8 @@ class HolidayCalSensor(Entity):
         now_day = datetime.date.today()
         if now_day in HOLIDAY.keys():
             return HOLIDAY[now_day]
-        elif now_day in HOLIDAY_BUBAN.keys():
-            return HOLIDAY_BUBAN[now_day]
+#        elif now_day in HOLIDAY_BUBAN.keys():
+#            return HOLIDAY_BUBAN[now_day]
         # 判断是否为周六和周日
         elif now_day.weekday() > 4:  #周六5/周日6
             return "周末"
