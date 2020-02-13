@@ -1,13 +1,3 @@
-const week_dic = {
-  "Monday":"星期一",
-  "Tuesday":"星期二",
-  "Wednesday":"星期三",
-  "Thursday":"星期四",
-  "Friday":"星期五",
-  "Saturday":"星期六",
-  "Sunday":"星期日",
-};
-
 class DateCard extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
@@ -82,11 +72,11 @@ class DateCard extends HTMLElement {
 
       if (this.dateObj.attributes.festival != "None"){
         this.content.innerHTML += `<div class="date-head">${this.dateObj.attributes.year} 年 ${this.dateObj.attributes.month} 月
-            &nbsp;&nbsp;${week_dic[this.dateObj.attributes.week]}&nbsp;&nbsp;【${this.dateObj.attributes.festival}】</div>`;
+            &nbsp;&nbsp;${this.dateObj.attributes.week}&nbsp;&nbsp;【${this.dateObj.attributes.festival}】</div>`;
       }
       else{
         this.content.innerHTML += `<div class="date-head">${this.dateObj.attributes.year} 年 ${this.dateObj.attributes.month} 月
-            &nbsp;&nbsp;${week_dic[this.dateObj.attributes.week]}</div>`;
+            &nbsp;&nbsp;${this.dateObj.attributes.week}</div>`;
       }
 
       if (this.dateObj.attributes.jnr != "None") {
