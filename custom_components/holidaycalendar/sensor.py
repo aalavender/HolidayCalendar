@@ -37,7 +37,7 @@ numCn = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "
 jqmc = ["冬至", "小寒", "大寒", "立春", "雨水", "惊蛰", "春分", "清明", "谷雨", "立夏", "小满", "芒种", "夏至", "小暑", "大暑", "立秋", "处暑","白露", "秋分", "寒露", "霜降", "立冬", "小雪", "大雪"]
 ymc = ["十一", "十二", "正", "二", "三", "四", "五", "六", "七", "八", "九", "十" ]
 rmc = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十", "卅一"]
-xingqi = ["星期一", "星期二","星期三","星期四", "星期五","星期六","星期日"]
+xingqi = ["星期日","星期一", "星期二","星期三","星期四", "星期五","星期六"]
 
 
 @asyncio.coroutine
@@ -69,12 +69,12 @@ class HolidayCalSensor(Entity):
 
     def update(self):
         year = self.lunar.getYearCal(datetime.datetime.now().year)
-        day = self.lunar.getDayByLunar(datetime.datetime.now().year,datetime.datetime.now().month,datetime.datetime.now().day)
+        day = self.lunar.getDayBySolar(datetime.datetime.now().year,datetime.datetime.now().month,datetime.datetime.now().day)
         self._entries["animal"] = ShX[year.ShX]
-        self._entries["year"] = datetime.datetime.now().year
-        self._entries["month"] = datetime.datetime.now().month
-        self._entries["day"] = datetime.datetime.now().day
-        self._entries["week"] = xingqi[datetime.datetime.now().weekday()]
+        self._entries["year"] = day.y
+        self._entries["month"] = day.m
+        self._entries["day"] = day.d
+        self._entries["week"] = xingqi[day.week]
         self._entries["cyclicalYear"] = Gan[day.Lyear2.tg] + Zhi[day.Lyear2.dz]
         self._entries["cyclicalMonth"] = Gan[day.Lmonth2.tg] + Zhi[day.Lmonth2.dz]
         self._entries["cyclicalDay"] = Gan[day.Lday2.tg]+Zhi[day.Lday2.dz]
