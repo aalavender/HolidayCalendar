@@ -1,8 +1,6 @@
 # 简介
-获取万年历和节假日信息 
-数据源地址： https://www.sojson.com/open/api/lunar/json.shtml
-接口返回的数据很全面，如：农历、黄历、禁忌、星期、生肖、当月的节气、是否闰月、是不是大月等，具体自己体会。
-本来用 sxtwl 自己写了一个更加全面的，但是 sxtwl 这个依赖包在ha上装不上
+农历采用 sxtwl 本地计算得出
+是否工作日接口：http://tool.bitefu.net/jiari/
 # 安装
 放入 <config directory>/custom_components/ 目录
 
@@ -12,17 +10,23 @@
 sensor:
   - platform: holidaycalendar
     name: 万年历
+    scan_interval: 999999  # 这是阻止自动更新，用自动化在零点更新
 ```
 
 # 属性说明
 | 属性 | 说明 | 
 | :-------------: |:-------------:| 
 | animal | 年的属性，2019年是猪年 | 
-| date | 当天日期 |
-| cndate | 当天日期天干地支描述 | 
+| year | 年 |
+| month | 月 |
+| day | 天 |
+| week | 星期x |
+| cyclicalYear | 天干地支年 | 
+| cyclicalMonth | 天干地支月 | 
+| cyclicalDay | 天干地支天 | 
 | lunar | 当天农历 | 
-| festival | 当天的节日，没有None，多个用/隔离 | 
-| jieqi | 当天的24节气，没有None | 
+| festival | 当天的节日，未实现，None | 
+| jieqi | 当天的24节气，未实现，None | 
 | jnr | 当天的纪念日，没有None，需要事先在getAnniversary函数中定义 | 
 
 
