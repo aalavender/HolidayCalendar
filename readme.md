@@ -26,7 +26,7 @@ sensor:
 | cyclicalDay | 天干地支天 | 
 | lunar | 当天农历 | 
 | festival | 当天的节日，未实现，None | 
-| jieqi | 当天的24节气，未实现，None | 
+| jieqi | 当天的24节气，更具香港天文台的数据得出（网友代码） | 
 | jnr | 当天的纪念日，没有None，需要事先在getAnniversary函数中定义 | 
 
 
