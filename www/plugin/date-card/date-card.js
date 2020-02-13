@@ -2,9 +2,10 @@ class DateCard extends HTMLElement {
   set hass(hass) {
     if (!this.content) {
       const card = document.createElement('ha-card');
-      this.config.title ? card.header = this.config.title : card.header = 'Date card';
+      card.header = this.config.title;
+      //this.config.title ? card.header = this.config.title : card.header = 'Date card';
       this.content = document.createElement('div');
-      this.content.style.padding = '0 16px 16px';
+      this.content.style.padding = '10px 0 0 0';
       card.appendChild(this.content);
       this.appendChild(card);
     }
