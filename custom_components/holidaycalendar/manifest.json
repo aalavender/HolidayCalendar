@@ -4,5 +4,5 @@
   "documentation": "https://github.com/aalavender/HolidayCalendar/blob/master/README.md",
   "dependencies": [],
   "codeowners": ["@aalavender"],
-  "requirements": ["requests"]
+  "requirements": ["sxtwl", "requests"]
 }
