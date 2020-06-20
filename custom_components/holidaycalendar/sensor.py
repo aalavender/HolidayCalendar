@@ -54,11 +54,16 @@ SolarHolidaysList=[
     {3: '中国抗日战争胜利纪念日', 8: '世界扫盲日', 9: '毛泽东逝世纪念日', 10: '中国教师节', 14: '世界清洁地球日', 18: '“九·一八”事变纪念日', 20: '全国爱牙日', 21: '国际和平日', 27: '世界旅游日'},
     {1: '国庆节', 4: '世界动物日', 10: '辛亥革命纪念日', 13: '中国少年先锋队诞辰日', 25: '抗美援朝纪念日'},
     {12: '孙中山诞辰纪念日', 28: '恩格斯诞辰纪念日'},
-    {1: '世界艾滋病日', 12: '西安事变纪念日', 13: '南京大屠杀纪念日', 24: '平安夜', 25: '圣诞节', 26: '毛泽东诞辰纪念日'} #12月
+    {1: '世界艾滋病日', 12: '西安事变纪念日', 13: '南TiaoXiuList京大屠杀纪念日', 24: '平安夜', 25: '圣诞节', 26: '毛泽东诞辰纪念日'} #12月
 ]
 
 LunarHolidaysList={(1,1):'春节',(5,5):'端午节', (7,15):'中元节', (8,15):'中秋节', (12,8):'腊八节',(12,23):'小年'}
-
+#2020年休假日
+XiuJiaList=[(1,1), (1,24), (1,25), (1,26), (1,27), (1,28), (1,29), (1,30), (1,31), (2,1), (2,2), (4,4), (4,5), (4,6), 
+            (5,1), (5,2), (5,3), (5,4), (5,5), (6,25), (6,26), (6,27), (10,1), (10,2), (10,3), (10,4), (10,5), (10,6)
+            , (10,7), (10,8)]
+#2020年周末调休日
+TiaoXiuList=[(1,19), (4,26), (5,9), (6,28), (9,27), (10,10)]
 
 @asyncio.coroutine
 def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
@@ -128,13 +133,22 @@ class HolidayCalSensor(Entity):
     def state(self):
         #:param day: 日期， 格式为 '20160404'
         #:return: bool
-        api = 'http://tool.bitefu.net/jiari/'
-        params = {'d': time.strftime("%Y%m%d", time.localtime()), 'apiserviceid': 1116}
-        rep = requests.get(api, params)
-        if rep.status_code != 200:
-            return '无法获取节日数据'
-        res = rep.text
-        return "休息日" if res != "0" else "工作日"
+        # api = 'http://tool.bitefu.net/jiari/'
+        # params = {'d': time.strftime("%Y%m%d", time.localtime()), 'apiserviceid': 1116}
+        # rep = requests.get(api, params)
+        # if rep.status_code != 200:
+        #     return '无法获取节日数据'
+        # res = rep.text
+        lt = time.localtime()
+        dt = (lt.tm_mon, lt.tm_mday)
+        if dt in XiuJiaList:
+            return "休息日"
+        elif dt in TiaoXiuList:
+            return "工作日"
+        elif lt.tm_wday in (5,6):
+            return "休息日"
+        else:
+            return "工作日"
 
     @property
     def icon(self):
