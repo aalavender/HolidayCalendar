@@ -2,7 +2,8 @@
 农历采用 sxtwl 本地计算得出
 是否工作日接口：http://tool.bitefu.net/jiari/
 # 安装
-放入 <config directory>/custom_components/ 目录
+后端：holidaycalendar目录放入 <config directory>/custom_components/ 目录
+前端：data-card目录放入 <config directory>/www/plugin/目录
 
 # 配置
 **Example configuration.yaml:**
